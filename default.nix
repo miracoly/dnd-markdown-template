@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { } }:
+{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/f4c846aee8e1e29062aa8514d5e0ab270f4ec2f9.tar.gz") { } }:
 let
   dndTemplate = pkgs.fetchFromGitHub {
     owner = "rpgtex";
