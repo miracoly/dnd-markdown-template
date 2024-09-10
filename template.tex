@@ -1,0 +1,52 @@
+\documentclass[a4paper,twocolumn,openany,nodeprecatedcode]{dndbook}
+
+\usepackage[
+$if(lang)$
+  $lang$
+$else$
+  english
+$endif$
+]{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage[singlelinecheck=false]{caption}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{shortvrb}
+\usepackage{stfloats}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\captionsetup[table]{labelformat=empty,font={sf,sc,bf,},skip=0pt}
+
+\MakeShortVerb{|}
+
+\lstset{%
+    basicstyle=\ttfamily,
+    language=[LaTeX]{TeX},
+    breaklines=true,
+}
+
+$if(title)$
+\title{$title$ \\
+$if(subtitle)$
+\large $subtitle$
+$endif$
+}
+$endif$
+$if(author)$
+\author{$author$}
+$endif$
+$if(date)$
+\date{$date$}
+$endif$
+
+\begin{document}
+
+    \frontmatter
+
+    \maketitle
+
+    $body$
+
+\end{document}
