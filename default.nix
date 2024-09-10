@@ -1,4 +1,5 @@
-{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/f4c846aee8e1e29062aa8514d5e0ab270f4ec2f9.tar.gz") { } }:
+{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/f4c846aee8e1e29062aa8514d5e0ab270f4ec2f9.tar.gz") {}
+ , src ? ./. }:
 let
   dndTemplate = pkgs.fetchFromGitHub {
     owner = "rpgtex";
@@ -10,7 +11,7 @@ in
 pkgs.stdenv.mkDerivation {
   name = "md-to-dnd-template";
 
-  src = ./.;
+  src = src;
 
   nativeBuildInputs = [
     pkgs.pandoc
