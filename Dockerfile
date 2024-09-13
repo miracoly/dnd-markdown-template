@@ -1,8 +1,19 @@
-FROM nixos/nix:2.21.4 AS builder
+ARG NIX_VERSION=2.21.4
 
-COPY default.nix /default.nix
-COPY template.tex /template.tex
-COPY test.md /test.md
+FROM nixos/nix:${NIX_VERSION} AS builder
 
-RUN nix-channel --update
-RUN nix-build --argstr src /
+WORKDIR /build
+
+COPY default.nix .
+COPY template.tex .
+
+# Enter nix shell to cache dependencies
+RUN nix-shell
+
+COPY test.md .
+
+# Build the PDF
+RUN nix-build
+
+FROM scratch
+COPY --from=builder /build/result/output.pdf /output.pdf
