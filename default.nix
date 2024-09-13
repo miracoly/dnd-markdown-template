@@ -11,7 +11,7 @@ in
 pkgs.stdenv.mkDerivation {
   name = "md-to-dnd-template";
 
-  src = src;
+  inherit src;
 
   nativeBuildInputs = [
     pkgs.pandoc
@@ -19,9 +19,11 @@ pkgs.stdenv.mkDerivation {
   ];
 
   buildPhase = ''
-    mkdir -p $out/texmf/tex/latex/dnd
-    cp -r ${dndTemplate}/* $out/texmf/tex/latex/dnd
-    export TEXINPUTS=$out/texmf/tex/latex/dnd:$TEXINPUTS
-    pandoc $src/test.md -o $out/output.pdf --template=template.tex
+    tmp_tex_dir=$(mktemp -d)
+    cp -r ${dndTemplate}/* $tmp_tex_dir
+    export TEXINPUTS=$tmp_tex_dir:$TEXINPUTS
+
+    mkdir -p $out
+    pandoc $src/test.md -o $out/output.pdf --template=$src/template.tex
   '';
 }
