@@ -12,6 +12,7 @@ COPY default.nix .
 RUN nix-shell
 
 COPY template.tex .
+COPY filter/ filter/
 COPY ${FILE} /build/input.md
 
 # Build the PDF

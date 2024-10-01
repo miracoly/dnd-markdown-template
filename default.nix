@@ -15,9 +15,9 @@ pkgs.stdenv.mkDerivation {
 
   src = ./.;
 
-  nativeBuildInputs = [
-    pkgs.pandoc
-    pkgs.texlive.combined.scheme-full
+  nativeBuildInputs = with pkgs; [
+    pandoc
+    texlive.combined.scheme-full
   ];
 
   configurePhase = ''
@@ -39,6 +39,9 @@ pkgs.stdenv.mkDerivation {
     export TEXINPUTS=$tmp_tex_dir:$TEXINPUTS
 
     mkdir -p $out
-    pandoc ./${file} -o $out/output.pdf --template=$src/template.tex
+    pandoc ./${file} \
+      -o $out/output.pdf \
+      --template=$src/template.tex \
+      --lua-filter="$src/filter/paragraph.lua"
   '';
 }
